@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>364</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="MyFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>10</y>
+      <width>300</width>
+      <height>300</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_sair">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>290</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sair</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_cores">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Colorir</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_translacao">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Translação</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_escala">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>70</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Escala</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_rotacao">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>100</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rotação</string>
+    </property>
+   </widget>
+   <zorder>btn_sair</zorder>
+   <zorder>btn_cores</zorder>
+   <zorder>btn_translacao</zorder>
+   <zorder>btn_escala</zorder>
+   <zorder>btn_rotacao</zorder>
+   <zorder>frame</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>500</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyFrame</class>
+   <extends>QFrame</extends>
+   <header location="global">meu_frame.h</header>
+   <container>1</container>
+   <slots>
+    <slot>colorir()</slot>
+    <slot>translacao()</slot>
+    <slot>escala()</slot>
+    <slot>rotacao()</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btn_sair</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>206</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>169</x>
+     <y>202</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_cores</sender>
+   <signal>clicked()</signal>
+   <receiver>frame</receiver>
+   <slot>colorir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_translacao</sender>
+   <signal>clicked()</signal>
+   <receiver>frame</receiver>
+   <slot>translacao()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_escala</sender>
+   <signal>clicked()</signal>
+   <receiver>frame</receiver>
+   <slot>escala()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_rotacao</sender>
+   <signal>clicked()</signal>
+   <receiver>frame</receiver>
+   <slot>rotacao()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slot1(int)</slot>
+ </slots>
+</ui>
