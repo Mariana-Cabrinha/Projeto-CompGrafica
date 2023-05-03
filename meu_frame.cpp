@@ -27,10 +27,10 @@ MyFrame::MyFrame(QWidget *parent) : QFrame(parent) {
 void MyFrame::paintEvent(QPaintEvent *event) {
     QFrame::paintEvent(event);
 
-    painter.begin(this);
+    QPainter painter(this);
 
     painter.setViewport(0, 0, 200, 200);
-    painter.setWindow(0, 0, 400, 400);
+    painter.setWindow(0, 0, zoom, zoom);
 
     for(auto& elemento : elementos) {
         QPen pen(elemento.cor, 2);
@@ -63,8 +63,6 @@ void MyFrame::paintEvent(QPaintEvent *event) {
             break;
         }
     }
-
-    painter.end();
 }
 
 void MyFrame::colorir() {
@@ -129,6 +127,6 @@ void MyFrame::rotacao() {
 }
 
 void MyFrame::darZoom(int zoom) {
-    painter.setWindow(0, 0, zoom, zoom);
+    this->zoom = zoom;
     update();
 }

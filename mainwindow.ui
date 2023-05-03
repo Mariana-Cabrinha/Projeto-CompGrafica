@@ -142,10 +142,16 @@
      <number>1</number>
     </property>
     <property name="value">
-     <number>400</number>
+     <number>600</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="invertedAppearance">
+     <bool>true</bool>
+    </property>
+    <property name="invertedControls">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

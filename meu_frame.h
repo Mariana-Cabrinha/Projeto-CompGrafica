@@ -23,7 +23,7 @@ protected:
 
 private:
     QList<Elemento> elementos;
-    QPainter painter;
+    int zoom = 600;
 };
 
 #endif // MEU_FRAME_H
