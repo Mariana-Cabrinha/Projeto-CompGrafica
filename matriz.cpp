@@ -1,32 +1,23 @@
 #include "matriz.h"
-#include <QVector>
 #include <cmath>
+#include <iostream>
 
-Matriz::Matriz(int nLinhas, int nColunas)
-{
-    // construir a matriz de tamanho linhas x colunas e inicializá-lo com zeros?.
+PontoMatriz::PontoMatriz() {
+    matriz[0][0] = 0;
+    matriz[1][0] = 0;
+    matriz[2][0] = 1;
 }
 
-Matriz::operator*(Matriz outraMatriz)
-{
-    // retornar uma nova matriz que é o produto desta matriz com outra matriz passada como argumento.
-    // número de colunas desta matriz tem que ser igual ao número de linhas da outra matriz.
+PontoMatriz::PontoMatriz(double x, double y) {
+    matriz[0][0] = x;
+    matriz[1][0] = y;
+    matriz[2][0] = 1;
 }
 
-void Matriz::translacao(double dx, double dy)
-{
-    matriz[0][2] += dx;
-    matriz[1][2] += dy;
+PontoMatriz PontoMatriz::operator*(double M[3][3]) {
+    PontoMatriz resultado;
+    resultado.matriz[0][0] = (matriz[0][0] * M[0][0]) + (matriz[1][0] * M[0][1]) + (matriz[2][0] * M[0][2]);
+    resultado.matriz[1][0] = (matriz[0][0] * M[1][0]) + (matriz[1][0] * M[1][1]) + (matriz[2][0] * M[1][2]);
+    resultado.matriz[2][0] = (matriz[0][0] * M[2][0]) + (matriz[1][0] * M[2][1]) + (matriz[2][0] * M[2][2]);
+    return resultado;
 }
-
-void Matriz::escala(double sx, double sy)
-{
-    matriz[0][0] *= sx;
-    matriz[1][1] *= sy;
-}
-
-void Matriz::rotacao(double angulo)
-{
-    // nem ideia.
-}
-

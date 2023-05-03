@@ -6,14 +6,59 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>364</height>
+    <width>502</width>
+    <height>372</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="btn_cores">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>111</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Colorir</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_sair">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>290</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sair</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>12</x>
+      <y>130</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>Zoom</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
    <widget class="MyFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -36,30 +81,17 @@
      <number>1</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_sair">
+   <widget class="QPushButton" name="btn_escala">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>290</y>
-      <width>80</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Sair</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_cores">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
+      <y>70</y>
       <width>111</width>
       <height>18</height>
      </rect>
     </property>
     <property name="text">
-     <string>Colorir</string>
+     <string>Escala</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_translacao">
@@ -75,19 +107,6 @@
      <string>Translação</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_escala">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>70</y>
-      <width>111</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Escala</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btn_rotacao">
     <property name="geometry">
      <rect>
@@ -101,19 +120,41 @@
      <string>Rotação</string>
     </property>
    </widget>
-   <zorder>btn_sair</zorder>
-   <zorder>btn_cores</zorder>
-   <zorder>btn_translacao</zorder>
-   <zorder>btn_escala</zorder>
-   <zorder>btn_rotacao</zorder>
-   <zorder>frame</zorder>
+   <widget class="Slider" name="sld_zoom">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>150</y>
+      <width>131</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>200</number>
+    </property>
+    <property name="maximum">
+     <number>800</number>
+    </property>
+    <property name="singleStep">
+     <number>1</number>
+    </property>
+    <property name="pageStep">
+     <number>1</number>
+    </property>
+    <property name="value">
+     <number>400</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>502</width>
      <height>25</height>
     </rect>
    </property>
@@ -131,27 +172,17 @@
     <slot>translacao()</slot>
     <slot>escala()</slot>
     <slot>rotacao()</slot>
+    <slot>darZoom(int)</slot>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>Slider</class>
+   <extends>QSlider</extends>
+   <header location="global">slider.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>btn_sair</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>79</x>
-     <y>206</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>169</x>
-     <y>202</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>btn_cores</sender>
    <signal>clicked()</signal>
@@ -160,23 +191,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>75</x>
-     <y>83</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>339</x>
-     <y>184</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_translacao</sender>
-   <signal>clicked()</signal>
-   <receiver>frame</receiver>
-   <slot>translacao()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>75</x>
-     <y>73</y>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
      <x>329</x>
@@ -216,8 +231,53 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btn_sair</sender>
+   <signal>clicked()</signal>
+   <receiver>frame</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>324</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_translacao</sender>
+   <signal>clicked()</signal>
+   <receiver>frame</receiver>
+   <slot>translacao()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sld_zoom</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>frame</receiver>
+   <slot>darZoom(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>183</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
- <slots>
-  <slot>slot1(int)</slot>
- </slots>
 </ui>

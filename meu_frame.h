@@ -1,34 +1,29 @@
-#ifndef MY_FRAME_H
-#define MY_FRAME_H
+#ifndef MEU_FRAME_H
+#define MEU_FRAME_H
 
 #include <QFrame>
-#include <QPaintEvent>
-#include <QPoint>
-#include <QLine>
-#include <QPolygon>
+#include "elemento.h"
 
 class MyFrame : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit MyFrame(QWidget *parent = nullptr);
-    void paintEvent(QPaintEvent *event) override;
-
-private:
-    bool m_colorir{false};
-    float m_dx{0.0};
-    float m_dy{0.0};
-    float m_escala{1.0};
-    float m_angulo{0.0};
+    MyFrame(QWidget *parent = nullptr);
 
 public slots:
     void colorir();
     void translacao();
     void escala();
     void rotacao();
+    void darZoom(int zoom);
 
-signals:
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
+private:
+    QList<Elemento> elementos;
+    QPainter painter;
 };
 
-#endif // MY_FRAME_H
+#endif // MEU_FRAME_H

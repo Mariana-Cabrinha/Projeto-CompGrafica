@@ -1,103 +1,16 @@
 #include "meu_frame.h"
 #include "matriz.h"
-#include <iostream>
+#include "elemento.h"
+#include "slider.h"
 #include <QVector>
 #include <cmath>
 #include <QPainter>
 #include <QPolygon>
 #include <QRandomGenerator>
+#include <iostream>
+#include <QSlider>
 
-// Classe Ponto
-class Ponto {
-public:
-    double x, y;
-
-    Ponto() : x(0), y(0) {}
-    Ponto(double x, double y) : x(x), y(y) {}
-};
-
-// Classe Elemento
-class Elemento {
-public:
-    QString nome;
-    QVector<Ponto> pontos;
-    char tipo;
-    QColor cor;
-};
-
-// Classe Ponto (Elemento)
-class ElementoPonto : public Elemento {
-public:
-    // Como criar um ponto
-    ElementoPonto(double x, double y) {
-        // Definindo o ponto
-        pontos.push_back(Ponto(x, y));
-
-        // Definindo nome, tipo e cor
-        nome = "Ponto";
-        tipo = 'p';
-        cor = Qt::black;
-    }
-};
-
-// Classe Linha
-class Linha : public Elemento {
-public:
-    // Como criar uma linha
-    Linha(double x, double y, double comprimento) {
-        // Definindo os pontos
-        pontos.push_back(Ponto(x, y));
-        pontos.push_back(Ponto(x + comprimento, y));
-
-        // Definindo nome, tipo e cor
-        nome = "Linha";
-        tipo = 'l';
-        cor = Qt::black;
-    }
-};
-
-// Classe Retângulo
-class Retangulo : public Elemento {
-public:
-    // Como criar um retângulo
-    Retangulo(double x, double y, double largura, double altura) {
-        // Definindo os pontos
-        pontos.push_back(Ponto(x, y));
-        pontos.push_back(Ponto(x + largura, y));
-        pontos.push_back(Ponto(x + largura, y + altura));
-        pontos.push_back(Ponto(x, y + altura));
-
-        // Definindo nome, tipo e cor
-        nome = "Retângulo";
-        tipo = 'r';
-        cor = Qt::black;
-    }
-};
-
-class Circulo : public Elemento {
-public:
-    // Como criar um círculo
-    Circulo(double elx, double ely, double raio, int numPontos) {
-        // Definindo os pontos
-        double angulo = 2 * M_PI / numPontos;
-        for (int i = 0; i < numPontos; ++i) {
-            double x = (raio * std::cos(i * angulo)) + elx;
-            double y = (raio * std::sin(i * angulo)) + ely;
-            pontos.push_back(Ponto(x, y));
-        }
-
-        // Definindo nome, tipo e cor
-        nome = "Círculo";
-        tipo = 'c';
-        cor = Qt::black;
-    }
-};
-
-QList<Elemento> elementos; //Lista de elementos global
-
-MyFrame::MyFrame(QWidget *parent)
-    : QFrame(parent)
-{
+MyFrame::MyFrame(QWidget *parent) : QFrame(parent) {
     setMinimumSize(200, 200);
 
     ElementoPonto P1(75, 75);
@@ -111,10 +24,10 @@ MyFrame::MyFrame(QWidget *parent)
     elementos.append(C1);
 }
 
-void MyFrame::paintEvent(QPaintEvent *event)
-{
+void MyFrame::paintEvent(QPaintEvent *event) {
     QFrame::paintEvent(event);
-    QPainter painter(this);
+
+    painter.begin(this);
 
     painter.setViewport(0, 0, 200, 200);
     painter.setWindow(0, 0, 400, 400);
@@ -127,22 +40,22 @@ void MyFrame::paintEvent(QPaintEvent *event)
 
         switch (elemento.tipo) {
         case 'p':
-            painter.drawPoint(elemento.pontos[0].x, elemento.pontos[0].y);
+            painter.drawPoint(elemento.pontos[0].matriz.matriz[0][0], elemento.pontos[0].matriz.matriz[1][0]);
             break;
         case 'l':
-            painter.drawLine(elemento.pontos[0].x, elemento.pontos[0].y, elemento.pontos[1].x, elemento.pontos[1].y);
+            painter.drawLine(elemento.pontos[0].matriz.matriz[0][0], elemento.pontos[0].matriz.matriz[1][0], elemento.pontos[1].matriz.matriz[0][0], elemento.pontos[1].matriz.matriz[1][0]);
             break;
         case 'r':
-            x = std::fmin(elemento.pontos[0].x, elemento.pontos[1].x);
-            y = std::fmin(elemento.pontos[0].y, elemento.pontos[1].y);
-            w = std::abs(elemento.pontos[0].x - elemento.pontos[1].x);
-            h = std::abs(elemento.pontos[0].y - elemento.pontos[2].y);
+            x = std::fmin(elemento.pontos[0].matriz.matriz[0][0], elemento.pontos[1].matriz.matriz[0][0]);
+            y = std::fmin(elemento.pontos[0].matriz.matriz[1][0], elemento.pontos[1].matriz.matriz[1][0]);
+            w = std::abs(elemento.pontos[0].matriz.matriz[0][0] - elemento.pontos[1].matriz.matriz[0][0]);
+            h = std::abs(elemento.pontos[0].matriz.matriz[1][0] - elemento.pontos[2].matriz.matriz[1][0]);
             painter.drawRect(x, y, w, h);
             break;
         case 'c':
-            x = elemento.pontos[0].x;
-            y = elemento.pontos[0].y;
-            raio = std::sqrt(std::pow(elemento.pontos[1].x - x, 2) + std::pow(elemento.pontos[1].y - y, 2));
+            x = elemento.pontos[0].matriz.matriz[0][0];
+            y = elemento.pontos[0].matriz.matriz[1][0];
+            raio = std::sqrt(std::pow(elemento.pontos[1].matriz.matriz[0][0] - x, 2) + std::pow(elemento.pontos[1].matriz.matriz[1][0] - y, 2));
             painter.drawEllipse(QPoint(x, y), raio, raio);
             break;
         default:
@@ -150,10 +63,11 @@ void MyFrame::paintEvent(QPaintEvent *event)
             break;
         }
     }
+
+    painter.end();
 }
 
-void MyFrame::colorir()
-{
+void MyFrame::colorir() {
     for (auto& elemento : elementos) {
         // Gerando valores aleatórios para os componentes RGB
         int r = QRandomGenerator::global()->bounded(256);
@@ -169,13 +83,13 @@ void MyFrame::colorir()
     update();
 }
 
-void MyFrame::translacao()
-{
+void MyFrame::translacao() {
     for (auto& elemento : elementos) {
         QVector<Ponto> novos_pontos;
+        double T[3][3] = {{1, 0, 3}, {0, 1, 3}, {0, 0, 1}};
         for (auto& ponto : elemento.pontos) {
-            Ponto novo(ponto.x + 3, ponto.y + 3);
-            novos_pontos.push_back(novo);
+            PontoMatriz novo = ponto.matriz * T;
+            novos_pontos.push_back(Ponto(novo.matriz[0][0], novo.matriz[1][0]));
         }
         elemento.pontos = novos_pontos;
     }
@@ -183,13 +97,13 @@ void MyFrame::translacao()
     update();
 }
 
-void MyFrame::escala()
-{
+void MyFrame::escala() {
     for (auto& elemento : elementos) {
         QVector<Ponto> novos_pontos;
+        double S[3][3] = {{1.1, 0, 0}, {0, 1.1, 0}, {0, 0, 1}};
         for (auto& ponto : elemento.pontos) {
-            Ponto novo(ponto.x * 1.1, ponto.y * 1.1);
-            novos_pontos.push_back(novo);
+            PontoMatriz novo = ponto.matriz * S;
+            novos_pontos.push_back(Ponto(novo.matriz[0][0], novo.matriz[1][0]));
         }
         elemento.pontos = novos_pontos;
     }
@@ -197,20 +111,24 @@ void MyFrame::escala()
     update();
 }
 
-void MyFrame::rotacao()
-{
+void MyFrame::rotacao() {
     for (auto& elemento : elementos) {
         double rad = 10 * M_PI / 180.0;
-        double coss = cos(rad);
-        double sen = sin(rad);
+        double c = cos(rad);
+        double s = sin(rad);
         QVector<Ponto> novos_pontos;
+        double R[3][3] = {{c, -s, 0}, {s, c, 0}, {0, 0, 1}};
         for (auto& ponto : elemento.pontos) {
-            Ponto novo(ponto.x * coss - ponto.y * sen,
-                       ponto.x * sen + ponto.y * coss);
-            novos_pontos.push_back(novo);
+            PontoMatriz novo = ponto.matriz * R;
+            novos_pontos.push_back(Ponto(novo.matriz[0][0], novo.matriz[1][0]));
         }
         elemento.pontos = novos_pontos;
     }
 
+    update();
+}
+
+void MyFrame::darZoom(int zoom) {
+    painter.setWindow(0, 0, zoom, zoom);
     update();
 }
