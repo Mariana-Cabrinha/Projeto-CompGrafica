@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
-    <height>372</height>
+    <width>822</width>
+    <height>367</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -154,13 +154,23 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="Frame3D" name="widget">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>10</y>
+      <width>300</width>
+      <height>301</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>502</width>
+     <width>822</width>
      <height>25</height>
     </rect>
    </property>
@@ -185,6 +195,11 @@
    <class>Slider</class>
    <extends>QSlider</extends>
    <header location="global">slider.h</header>
+  </customwidget>
+  <customwidget>
+   <class>Frame3D</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">frame3D.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

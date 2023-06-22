@@ -1,4 +1,7 @@
-QT       += core gui
+QT += core gui
+QT += opengl
+QT += openglwidgets
+LIBS += -lopengl32 -lglu32
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,17 +13,21 @@ CONFIG += c++17
 
 SOURCES += \
     elemento.cpp \
+    frame3D.cpp \
     main.cpp \
     mainwindow.cpp \
     matriz.cpp \
     meu_frame.cpp \
+    pokemon.cpp \
     slider.cpp
 
 HEADERS += \
     elemento.h \
+    frame3D.h \
     mainwindow.h \
     matriz.h \
     meu_frame.h \
+    pokemon.h \
     slider.h
 
 FORMS += \
